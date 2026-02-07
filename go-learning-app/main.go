@@ -6,6 +6,7 @@ import (
 	"io/fs"
 	"log"
 	"net/http"
+	"os"
 
 	"go-learning-app/data"
 	"go-learning-app/handlers"
@@ -32,7 +33,12 @@ func main() {
 	}
 	mux.Handle("GET /", http.FileServer(http.FS(staticFS)))
 
-	addr := ":8080"
+	// Get port from environment variable (Cloud Run sets $PORT)
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+	addr := ":" + port
 	fmt.Printf("Go学習アプリを起動しました: http://localhost%s\n", addr)
 	log.Fatal(http.ListenAndServe(addr, mux))
 }
