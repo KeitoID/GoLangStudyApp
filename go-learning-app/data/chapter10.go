@@ -96,23 +96,43 @@ func main() {
 			"Go製のCLIツールはシングルバイナリなのでDocker等での配布が容易です",
 			"大規模なCLIには cobra や urfave/cli などのサードパーティライブラリも人気です",
 		},
+		Exercise: &models.Exercise{
+			Title:       "コマンドライン引数の利用",
+			Description: "os.Argsを使ってコマンドライン引数を直接参照し、「Hello, [引数]」と表示するプログラムを書いてください。引数がない場合は「Hello, Guest」と表示してください。",
+			StarterCode: `package main
+
+import (
+    "fmt"
+    "os"
+)
+
+func main() {
+    // os.Argsをチェック
+    // os.Args[0]はプログラム名なので、os.Args[1]以降を確認
+    
+    // 引数を渡す方法: エディタではコマンドライン引数を渡せませんが、
+    // os.Argsを擬似的に書き換えてテストしてみましょう
+    // os.Args = []string{"prog", "Go"}
+}
+`,
+		},
 	})
 
 	s.addQuiz(models.Quiz{
 		LessonID: "10-1",
 		Questions: []models.Question{
 			{
-				ID:      "10-1-1",
-				Text:    "flag.String() の戻り値の型は？",
-				Options: []string{"string", "*string", "[]string", "flag.Value"},
-				Answer:  1,
+				ID:          "10-1-1",
+				Text:        "flag.String() の戻り値の型は？",
+				Options:     []string{"string", "*string", "[]string", "flag.Value"},
+				Answer:      1,
 				Explanation: "flag.String() は *string（文字列へのポインタ）を返します。使用時は * で値を取り出します。",
 			},
 			{
-				ID:      "10-1-2",
-				Text:    "GoのCLIツールの配布が容易な理由は？",
-				Options: []string{"インタプリタ言語だから", "シングルバイナリにコンパイルされるから", "JVMで動くから", "Dockerが必須だから"},
-				Answer:  1,
+				ID:          "10-1-2",
+				Text:        "GoのCLIツールの配布が容易な理由は？",
+				Options:     []string{"インタプリタ言語だから", "シングルバイナリにコンパイルされるから", "JVMで動くから", "Dockerが必須だから"},
+				Answer:      1,
 				Explanation: "Goは依存ライブラリも含めてシングルバイナリにコンパイルされるため、実行環境に依存しません。",
 			},
 		},
@@ -177,23 +197,51 @@ func loggingMiddleware(next http.Handler) http.Handler {
 			"ミドルウェアは http.Handler をラップするパターンで実装します",
 			"http.Server 構造体でタイムアウトなどの詳細設定が可能です",
 		},
+		Exercise: &models.Exercise{
+			Title:       "ハンドラーのテスト",
+			Description: "http.HandlerFuncを使って「OK」と返す単純なハンドラーを作成し、httptest.NewRecorderを使ってそのハンドラーを呼び出し、レスポンス内容を表示してください（サーバーを起動せずにハンドラーだけテストします）。",
+			StarterCode: `package main
+
+import (
+    "fmt"
+    "net/http"
+    "net/http/httptest"
+)
+
+func helloHandler(w http.ResponseWriter, r *http.Request) {
+    fmt.Fprint(w, "OK")
+}
+
+func main() {
+    // リクエスト作成
+    req := httptest.NewRequest("GET", "/", nil)
+    // レスポンス記録用レコーダー
+    rec := httptest.NewRecorder()
+    
+    // ハンドラー呼び出し
+    helloHandler(rec, req)
+    
+    // 結果表示
+    fmt.Println("Response:", rec.Body.String())
+}`,
+		},
 	})
 
 	s.addQuiz(models.Quiz{
 		LessonID: "10-2",
 		Questions: []models.Question{
 			{
-				ID:      "10-2-1",
-				Text:    "Go 1.22 の ServeMux の新機能は？",
-				Options: []string{"WebSocket対応", "メソッドベースルーティングとパスパラメータ", "自動HTTPS", "GraphQL対応"},
-				Answer:  1,
+				ID:          "10-2-1",
+				Text:        "Go 1.22 の ServeMux の新機能は？",
+				Options:     []string{"WebSocket対応", "メソッドベースルーティングとパスパラメータ", "自動HTTPS", "GraphQL対応"},
+				Answer:      1,
 				Explanation: "Go 1.22からServeMuxがメソッドベースルーティング（GET /pathなど）とパスパラメータ（{id}）をサポートします。",
 			},
 			{
-				ID:      "10-2-2",
-				Text:    "r.PathValue(\"id\") は何を返す？",
-				Options: []string{"クエリパラメータ", "URLパスパラメータの値", "ヘッダーの値", "フォームの値"},
-				Answer:  1,
+				ID:          "10-2-2",
+				Text:        "r.PathValue(\"id\") は何を返す？",
+				Options:     []string{"クエリパラメータ", "URLパスパラメータの値", "ヘッダーの値", "フォームの値"},
+				Answer:      1,
 				Explanation: "r.PathValue() はURLパスに定義したパラメータ（例: /users/{id}）の値を返します。",
 			},
 		},
@@ -301,30 +349,51 @@ func jsonHandler(w http.ResponseWriter, r *http.Request) {
 			"json.NewEncoder/Decoder は io.Writer/Reader と直接やり取りします",
 			"構造体タグはバッククォートで囲みます",
 		},
+		Exercise: &models.Exercise{
+			Title:       "JSONへの変換",
+			Description: "Item構造体（Name, Price）を定義し、そのインスタンスを作成してJSON形式の文字列に変換して表示してください。PriceフィールドはJSONでは \"cost\" というキーにしてください。",
+			StarterCode: `package main
+
+import (
+    "encoding/json"
+    "fmt"
+)
+
+// Item構造体を定義
+
+func main() {
+    item := Item{Name: "Apple", Price: 100}
+    
+    // JSONに変換
+    
+    // 表示
+    
+}`,
+		},
 	})
 
 	s.addQuiz(models.Quiz{
 		LessonID: "10-3",
 		Questions: []models.Question{
 			{
-				ID:      "10-3-1",
-				Text:    "json:\"-\" タグの意味は？",
-				Options: []string{"フィールドを必須にする", "フィールドをJSONから除外する", "フィールド名をハイフンにする", "デフォルト値を設定する"},
-				Answer:  1,
+				ID:          "10-3-1",
+				Text:        "json:\"-\" タグの意味は？",
+				Options:     []string{"フィールドを必須にする", "フィールドをJSONから除外する", "フィールド名をハイフンにする", "デフォルト値を設定する"},
+				Answer:      1,
 				Explanation: "json:\"-\" はそのフィールドをJSONのエンコード/デコードから完全に除外します。",
 			},
 			{
-				ID:      "10-3-2",
-				Text:    "omitempty の効果は？",
-				Options: []string{"必須フィールドにする", "常に出力する", "ゼロ値なら出力を省略する", "null を出力する"},
-				Answer:  2,
+				ID:          "10-3-2",
+				Text:        "omitempty の効果は？",
+				Options:     []string{"必須フィールドにする", "常に出力する", "ゼロ値なら出力を省略する", "null を出力する"},
+				Answer:      2,
 				Explanation: "omitempty はフィールドがゼロ値（0, \"\", nil等）の場合、JSON出力から省略します。",
 			},
 			{
-				ID:      "10-3-3",
-				Text:    "json.NewEncoder(w).Encode(v) の利点は？",
-				Options: []string{"高速になる", "io.Writerに直接書き込める", "エラーが出ない", "自動でgzip圧縮される"},
-				Answer:  1,
+				ID:          "10-3-3",
+				Text:        "json.NewEncoder(w).Encode(v) の利点は？",
+				Options:     []string{"高速になる", "io.Writerに直接書き込める", "エラーが出ない", "自動でgzip圧縮される"},
+				Answer:      1,
 				Explanation: "NewEncoderはio.Writer（http.ResponseWriter等）に直接JSONを書き込めるため、中間のバイト列を作る必要がありません。",
 			},
 		},

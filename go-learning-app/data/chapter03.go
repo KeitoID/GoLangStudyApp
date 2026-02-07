@@ -78,23 +78,41 @@ func main() {
 			"関数は第一級オブジェクトとして変数に代入できます",
 			"可変長引数は関数内ではスライスとして扱われます",
 		},
+		Exercise: &models.Exercise{
+			Title:       "掛け算をする関数",
+			Description: "2つの整数を受け取り、その積（掛け算の結果）を返す関数 multiply を作成し、main関数から呼び出して結果を表示してください。",
+			StarterCode: `package main
+
+import "fmt"
+
+// multiply 関数を定義
+func multiply(a, b int) int {
+    // ここに実装
+    return 0
+}
+
+func main() {
+    result := multiply(10, 20)
+    fmt.Println("10 * 20 =", result)
+}`,
+		},
 	})
 
 	s.addQuiz(models.Quiz{
 		LessonID: "3-1",
 		Questions: []models.Question{
 			{
-				ID:      "3-1-1",
-				Text:    "func add(a, b int) int の a, b の型は？",
-				Options: []string{"a はint、b は型なし", "両方ともint", "aはany、bはint", "構文エラー"},
-				Answer:  1,
+				ID:          "3-1-1",
+				Text:        "func add(a, b int) int の a, b の型は？",
+				Options:     []string{"a はint、b は型なし", "両方ともint", "aはany、bはint", "構文エラー"},
+				Answer:      1,
 				Explanation: "同じ型の引数は型を省略して列挙できます。a, b int は a int, b int と同じです。",
 			},
 			{
-				ID:      "3-1-2",
-				Text:    "可変長引数 nums ...int は関数内でどう扱われる？",
-				Options: []string{"配列として", "スライスとして", "ポインタとして", "マップとして"},
-				Answer:  1,
+				ID:          "3-1-2",
+				Text:        "可変長引数 nums ...int は関数内でどう扱われる？",
+				Options:     []string{"配列として", "スライスとして", "ポインタとして", "マップとして"},
+				Answer:      1,
 				Explanation: "可変長引数は関数内ではスライス（[]int）として扱われます。",
 			},
 		},
@@ -171,23 +189,40 @@ func main() {
 			"不要な戻り値は _ で無視できます",
 			"名前付き戻り値は関数シグネチャでドキュメントとしても機能します",
 		},
+		Exercise: &models.Exercise{
+			Title:       "値を入れ替える関数",
+			Description: "2つの文字列を受け取り、それらを入れ替えて（逆の順序で）返す関数 swap を作成してください。",
+			StarterCode: `package main
+
+import "fmt"
+
+func swap(a, b string) (string, string) {
+    // ここに実装
+    return "", ""
+}
+
+func main() {
+    a, b := swap("Hello", "World")
+    fmt.Println(a, b) // World Hello と表示されるはず
+}`,
+		},
 	})
 
 	s.addQuiz(models.Quiz{
 		LessonID: "3-2",
 		Questions: []models.Question{
 			{
-				ID:      "3-2-1",
-				Text:    "Goのエラーハンドリングの基本パターンは？",
-				Options: []string{"try-catch", "(結果, error) を返す", "例外をthrow", "errnoを使う"},
-				Answer:  1,
+				ID:          "3-2-1",
+				Text:        "Goのエラーハンドリングの基本パターンは？",
+				Options:     []string{"try-catch", "(結果, error) を返す", "例外をthrow", "errnoを使う"},
+				Answer:      1,
 				Explanation: "Goでは関数が (結果, error) の2つの値を返すパターンが標準的なエラーハンドリングです。",
 			},
 			{
-				ID:      "3-2-2",
-				Text:    "名前付き戻り値で return に値を指定しないとどうなる？",
-				Options: []string{"ゼロ値が返る", "コンパイルエラー", "名前付き変数の現在値が返る", "nil が返る"},
-				Answer:  2,
+				ID:          "3-2-2",
+				Text:        "名前付き戻り値で return に値を指定しないとどうなる？",
+				Options:     []string{"ゼロ値が返る", "コンパイルエラー", "名前付き変数の現在値が返る", "nil が返る"},
+				Answer:      2,
 				Explanation: "裸のreturnは名前付き戻り値変数の現在の値を返します。",
 			},
 		},
@@ -244,23 +279,39 @@ func main() {
 			"レシーバの値を変更する場合はポインタレシーバを使います",
 			"Goは自動的にポインタと値を相互変換してメソッドを呼び出します",
 		},
+		Exercise: &models.Exercise{
+			Title:       "長方形の面積",
+			Description: "幅(Width)と高さ(Height)を持つ構造体 Rectangle を定義し、その面積を計算して返すメソッド Area() を実装してください。",
+			StarterCode: `package main
+
+import "fmt"
+
+// Rectangle 構造体の定義
+
+// Area メソッドの定義
+
+func main() {
+    r := Rectangle{Width: 10, Height: 5}
+    fmt.Println("面積:", r.Area())
+}`,
+		},
 	})
 
 	s.addQuiz(models.Quiz{
 		LessonID: "3-3",
 		Questions: []models.Question{
 			{
-				ID:      "3-3-1",
-				Text:    "ポインタレシーバを使う主な理由は？",
-				Options: []string{"速度を上げるため", "レシーバの値を変更するため", "メモリを節約するため", "並行処理のため"},
-				Answer:  1,
+				ID:          "3-3-1",
+				Text:        "ポインタレシーバを使う主な理由は？",
+				Options:     []string{"速度を上げるため", "レシーバの値を変更するため", "メモリを節約するため", "並行処理のため"},
+				Answer:      1,
 				Explanation: "ポインタレシーバの主な目的はレシーバの値を変更することです。副次的にコピーを避ける利点もあります。",
 			},
 			{
-				ID:      "3-3-2",
-				Text:    "メソッドを追加できるのは？",
-				Options: []string{"任意の型", "構造体のみ", "同じパッケージ内で定義された型", "int や string にも追加可能"},
-				Answer:  2,
+				ID:          "3-3-2",
+				Text:        "メソッドを追加できるのは？",
+				Options:     []string{"任意の型", "構造体のみ", "同じパッケージ内で定義された型", "int や string にも追加可能"},
+				Answer:      2,
 				Explanation: "メソッドは同じパッケージ内で定義された型にのみ追加できます。組み込み型に直接メソッドを追加することはできません。",
 			},
 		},
@@ -335,23 +386,45 @@ func main() {
 			"ゴルーチンでクロージャを使う際はループ変数のキャプチャに注意が必要です",
 			"関数型は func(引数型) 戻り値型 の形で表現します",
 		},
+		Exercise: &models.Exercise{
+			Title:       "ステートフルなカウンター",
+			Description: "呼び出すたびに指定された数だけカウントアップするクロージャを作成してください。",
+			StarterCode: `package main
+
+import "fmt"
+
+func createAdder(step int) func() int {
+    sum := 0
+    return func() int {
+        // ここに実装
+        return sum
+    }
+}
+
+func main() {
+    addTwo := createAdder(2)
+    fmt.Println(addTwo()) // 2
+    fmt.Println(addTwo()) // 4
+    fmt.Println(addTwo()) // 6
+}`,
+		},
 	})
 
 	s.addQuiz(models.Quiz{
 		LessonID: "3-4",
 		Questions: []models.Question{
 			{
-				ID:      "3-4-1",
-				Text:    "クロージャが外部変数を保持する方法は？",
-				Options: []string{"値のコピー", "参照（ポインタ）", "グローバル変数として", "チャネル経由"},
-				Answer:  1,
+				ID:          "3-4-1",
+				Text:        "クロージャが外部変数を保持する方法は？",
+				Options:     []string{"値のコピー", "参照（ポインタ）", "グローバル変数として", "チャネル経由"},
+				Answer:      1,
 				Explanation: "クロージャは外部変数への参照を保持します。変数の値が変わるとクロージャ内でも反映されます。",
 			},
 			{
-				ID:      "3-4-2",
-				Text:    "func() int を返す関数の戻り値の型宣言は？",
-				Options: []string{"func int", "func() int", "function() int", "=> int"},
-				Answer:  1,
+				ID:          "3-4-2",
+				Text:        "func() int を返す関数の戻り値の型宣言は？",
+				Options:     []string{"func int", "func() int", "function() int", "=> int"},
+				Answer:      1,
 				Explanation: "Goでは関数型は func(引数型) 戻り値型 の形で表現します。",
 			},
 		},

@@ -102,23 +102,47 @@ func TestAddSubtests(t *testing.T) {
 			"t.Fatal() はテストを即座に中断します",
 			"t.Run() でサブテストを作成でき、個別に実行可能です",
 		},
+		Exercise: &models.Exercise{
+			Title:       "手動テストの実装",
+			Description: "数値を2乗する関数 Square(n int) int を作成し、main関数の中で 5 の2乗が 25 になるか確認する「手動テスト」を書いてください。結果が正しければ \"PASS\"、間違っていれば \"FAIL\" と表示してください。",
+			StarterCode: `package main
+
+import "fmt"
+
+func Square(n int) int {
+    // 実装
+    return 0
+}
+
+func main() {
+    result := Square(5)
+    expected := 25
+    
+    // 比較して PASS/FAIL を表示
+    if result == expected {
+        fmt.Println("PASS")
+    } else {
+        fmt.Printf("FAIL: want %d, got %d\n", expected, result)
+    }
+}`,
+		},
 	})
 
 	s.addQuiz(models.Quiz{
 		LessonID: "9-1",
 		Questions: []models.Question{
 			{
-				ID:      "9-1-1",
-				Text:    "Goのテストファイルの命名規則は？",
-				Options: []string{"test_*.go", "*_test.go", "*.test.go", "test/*.go"},
-				Answer:  1,
+				ID:          "9-1-1",
+				Text:        "Goのテストファイルの命名規則は？",
+				Options:     []string{"test_*.go", "*_test.go", "*.test.go", "test/*.go"},
+				Answer:      1,
 				Explanation: "Goのテストファイルは _test.go で終わる必要があります（例: math_test.go）。",
 			},
 			{
-				ID:      "9-1-2",
-				Text:    "t.Error() と t.Fatal() の違いは？",
-				Options: []string{"同じ動作", "Error は続行、Fatal は中断", "Fatal は続行、Error は中断", "Error はログ出力のみ"},
-				Answer:  1,
+				ID:          "9-1-2",
+				Text:        "t.Error() と t.Fatal() の違いは？",
+				Options:     []string{"同じ動作", "Error は続行、Fatal は中断", "Fatal は続行、Error は中断", "Error はログ出力のみ"},
+				Answer:      1,
 				Explanation: "t.Error() はテストを失敗とマークして続行しますが、t.Fatal() はテストを即座に中断します。",
 			},
 		},
@@ -174,23 +198,51 @@ func TestAdd_TableDriven(t *testing.T) {
 			"t.Run() の第1引数がサブテスト名になり、-run フラグで個別実行できます",
 			"tt という変数名はテストケースのイディオムです（test tableの略）",
 		},
+		Exercise: &models.Exercise{
+			Title:       "テーブル駆動テストの練習",
+			Description: "数値が偶数かどうかを判定する IsEven(n int) bool 関数を作成し、複数のテストケース（スライス）を使って動作確認を行うmain関数を書いてください。",
+			StarterCode: `package main
+
+import "fmt"
+
+func IsEven(n int) bool {
+    return n % 2 == 0
+}
+
+func main() {
+    tests := []struct {
+        input    int
+        expected bool
+    }{
+        {2, true},
+        {3, false},
+        {0, true},
+        {-1, false},
+    }
+    
+    // テーブルをループしてテスト実行
+    for _, tt := range tests {
+        // 結果を表示
+    }
+}`,
+		},
 	})
 
 	s.addQuiz(models.Quiz{
 		LessonID: "9-2",
 		Questions: []models.Question{
 			{
-				ID:      "9-2-1",
-				Text:    "テーブル駆動テストのメリットは？",
-				Options: []string{"実行速度が上がる", "テストケース追加が容易で重複を排除", "自動的にカバレッジ100%になる", "並列実行される"},
-				Answer:  1,
+				ID:          "9-2-1",
+				Text:        "テーブル駆動テストのメリットは？",
+				Options:     []string{"実行速度が上がる", "テストケース追加が容易で重複を排除", "自動的にカバレッジ100%になる", "並列実行される"},
+				Answer:      1,
 				Explanation: "テーブル駆動テストは、テストケースの追加が容易でコードの重複を排除できます。",
 			},
 			{
-				ID:      "9-2-2",
-				Text:    "テストケースを個別に実行するには？",
-				Options: []string{"go test -v", "go test -run テスト名/サブテスト名", "go test -single", "go test -only テスト名"},
-				Answer:  1,
+				ID:          "9-2-2",
+				Text:        "テストケースを個別に実行するには？",
+				Options:     []string{"go test -v", "go test -run テスト名/サブテスト名", "go test -single", "go test -only テスト名"},
+				Answer:      1,
 				Explanation: "go test -run 'TestAdd/正の数同士' のようにして特定のサブテストだけを実行できます。",
 			},
 		},
@@ -245,23 +297,49 @@ func BenchmarkConcat(b *testing.B) {
 			"b.ResetTimer() でセットアップ時間を除外できます",
 			"b.RunParallel() で並列ベンチマークも実行できます",
 		},
+		Exercise: &models.Exercise{
+			Title:       "ベンチマーク関数の定義",
+			Description: "文字列結合を行う関数 Concat(a, b string) string を対象としたベンチマーク関数 BenchmarkConcat のコードを書いてください。（注: このエディタではベンチマークは実行できませんが、構文の練習として書いてみましょう）",
+			StarterCode: `package main
+
+import (
+    "testing"
+)
+
+func Concat(a, b string) string {
+    return a + b
+}
+
+// BenchmarkConcat をここに実装
+func BenchmarkConcat(b *testing.B) {
+    
+}
+
+func main() {
+    // ベンチマークは実行できませんが、コードが正しいか確認します
+    var _ func(*testing.B) = BenchmarkConcat
+    fmt.Println("Code compiled successfully")
+}
+
+import "fmt"`,
+		},
 	})
 
 	s.addQuiz(models.Quiz{
 		LessonID: "9-3",
 		Questions: []models.Question{
 			{
-				ID:      "9-3-1",
-				Text:    "ベンチマーク関数の命名規則は？",
-				Options: []string{"Bench_で始まる", "Benchmark で始まる", "BM_ で始まる", "Perf で始まる"},
-				Answer:  1,
+				ID:          "9-3-1",
+				Text:        "ベンチマーク関数の命名規則は？",
+				Options:     []string{"Bench_で始まる", "Benchmark で始まる", "BM_ で始まる", "Perf で始まる"},
+				Answer:      1,
 				Explanation: "ベンチマーク関数はBenchmarkで始まり、*testing.B を引数に取ります。",
 			},
 			{
-				ID:      "9-3-2",
-				Text:    "b.N の値は誰が決める？",
-				Options: []string{"プログラマ", "Goランタイムが自動調整", "コンパイラ", "OS"},
-				Answer:  1,
+				ID:          "9-3-2",
+				Text:        "b.N の値は誰が決める？",
+				Options:     []string{"プログラマ", "Goランタイムが自動調整", "コンパイラ", "OS"},
+				Answer:      1,
 				Explanation: "b.N の値はGoランタイムが自動的に調整します。安定した計測結果が得られるまで増やされます。",
 			},
 		},

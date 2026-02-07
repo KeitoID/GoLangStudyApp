@@ -84,23 +84,46 @@ func main() {
 			"循環インポート（A→B→A）はコンパイルエラーになります",
 			"_ インポート（ブランクインポート）は init() 関数だけを実行するために使います",
 		},
+		Exercise: &models.Exercise{
+			Title:       "標準パッケージの利用",
+			Description: "strings パッケージと math パッケージをインポートし、\"hello world\" を大文字に変換して表示し、その後に 16 の平方根を表示するプログラムを作成してください。",
+			StarterCode: `package main
+
+import (
+    "fmt"
+    // strings と math をインポート
+    
+    
+)
+
+func main() {
+    text := "hello world"
+    num := 16.0
+    
+    // 大文字変換して表示
+    
+    
+    // 平方根を表示
+    
+}`,
+		},
 	})
 
 	s.addQuiz(models.Quiz{
 		LessonID: "8-1",
 		Questions: []models.Question{
 			{
-				ID:      "8-1-1",
-				Text:    "1つのディレクトリに含められるパッケージの数は？",
-				Options: []string{"無制限", "1つ", "2つまで", "ファイル数と同じ"},
-				Answer:  1,
+				ID:          "8-1-1",
+				Text:        "1つのディレクトリに含められるパッケージの数は？",
+				Options:     []string{"無制限", "1つ", "2つまで", "ファイル数と同じ"},
+				Answer:      1,
 				Explanation: "Goでは1つのディレクトリに1つのパッケージのみ含められます（テストファイルの _test パッケージは例外）。",
 			},
 			{
-				ID:      "8-1-2",
-				Text:    "_ \"image/png\" のブランクインポートの目的は？",
-				Options: []string{"パッケージを削除する", "init()関数のみ実行する", "テスト用", "最適化のため"},
-				Answer:  1,
+				ID:          "8-1-2",
+				Text:        "_ \"image/png\" のブランクインポートの目的は？",
+				Options:     []string{"パッケージを削除する", "init()関数のみ実行する", "テスト用", "最適化のため"},
+				Answer:      1,
 				Explanation: "ブランクインポートはパッケージのinit()関数を実行するためだけに使います。画像デコーダの登録などで使われます。",
 			},
 		},
@@ -168,23 +191,38 @@ func main() {
 			"go.sum は自動生成されるので手動編集は不要です",
 			"モジュール名はリポジトリのURLにするのが慣例です",
 		},
+		Exercise: &models.Exercise{
+			Title:       "モジュールの説明",
+			Description: "fmtパッケージを使って、Go Modulesで依存関係を整理する際によく使うコマンド（tidy）の説明を表示するプログラムを書いてください。",
+			StarterCode: `package main
+
+import "fmt"
+
+func main() {
+    command := "go mod tidy"
+    description := "依存関係を整理するコマンド"
+    
+    // コマンドと説明を表示
+    
+}`,
+		},
 	})
 
 	s.addQuiz(models.Quiz{
 		LessonID: "8-2",
 		Questions: []models.Question{
 			{
-				ID:      "8-2-1",
-				Text:    "go mod tidy の役割は？",
-				Options: []string{"モジュールを初期化する", "不要な依存を削除し不足を追加する", "パッケージをビルドする", "テストを実行する"},
-				Answer:  1,
+				ID:          "8-2-1",
+				Text:        "go mod tidy の役割は？",
+				Options:     []string{"モジュールを初期化する", "不要な依存を削除し不足を追加する", "パッケージをビルドする", "テストを実行する"},
+				Answer:      1,
 				Explanation: "go mod tidy は使われていない依存を削除し、不足している依存を追加します。",
 			},
 			{
-				ID:      "8-2-2",
-				Text:    "go.sum ファイルの役割は？",
-				Options: []string{"ソースコードの要約", "依存パッケージのハッシュ記録", "ビルド設定", "テスト結果"},
-				Answer:  1,
+				ID:          "8-2-2",
+				Text:        "go.sum ファイルの役割は？",
+				Options:     []string{"ソースコードの要約", "依存パッケージのハッシュ記録", "ビルド設定", "テスト結果"},
+				Answer:      1,
 				Explanation: "go.sum には依存パッケージのハッシュが記録され、ビルドの再現性を保証します。",
 			},
 		},
@@ -246,23 +284,46 @@ func (u *User) String() string {
 			"構造体のフィールドも同じルールに従います",
 			"internal ディレクトリ内のパッケージは親モジュール内でのみインポート可能です",
 		},
+		Exercise: &models.Exercise{
+			Title:       "カプセル化",
+			Description: "Product構造体を定義してください。公開フィールド Name と非公開フィールド price を持ち、priceを設定する SetPrice メソッドと、priceを取得する Price メソッドを実装してください。",
+			StarterCode: `package main
+
+import "fmt"
+
+// Product 構造体定義
+
+// SetPrice メソッド
+
+// Price メソッド
+
+func main() {
+    p := Product{Name: "Laptop"}
+    
+    // 価格を設定
+    p.SetPrice(150000)
+    
+    // 価格を表示
+    fmt.Printf("製品: %s, 価格: %d\n", p.Name, p.Price())
+}`,
+		},
 	})
 
 	s.addQuiz(models.Quiz{
 		LessonID: "8-3",
 		Questions: []models.Question{
 			{
-				ID:      "8-3-1",
-				Text:    "Goでシンボルを公開するには？",
-				Options: []string{"public キーワードを付ける", "名前を大文字で始める", "export する", "アノテーションを付ける"},
-				Answer:  1,
+				ID:          "8-3-1",
+				Text:        "Goでシンボルを公開するには？",
+				Options:     []string{"public キーワードを付ける", "名前を大文字で始める", "export する", "アノテーションを付ける"},
+				Answer:      1,
 				Explanation: "Goでは名前を大文字で始めるだけでエクスポート（公開）されます。キーワードは不要です。",
 			},
 			{
-				ID:      "8-3-2",
-				Text:    "internal ディレクトリ内のパッケージの特徴は？",
-				Options: []string{"テスト専用", "親モジュール内でのみインポート可能", "自動的に公開される", "ビルドされない"},
-				Answer:  1,
+				ID:          "8-3-2",
+				Text:        "internal ディレクトリ内のパッケージの特徴は？",
+				Options:     []string{"テスト専用", "親モジュール内でのみインポート可能", "自動的に公開される", "ビルドされない"},
+				Answer:      1,
 				Explanation: "internal ディレクトリ内のパッケージは、そのinternalディレクトリの親以下からのみインポートできます。",
 			},
 		},

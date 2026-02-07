@@ -62,23 +62,40 @@ func main() {
 			"[...]型{値} でコンパイラにサイズを推論させることができます",
 			"実務ではスライスの方がはるかに多く使われます",
 		},
+		Exercise: &models.Exercise{
+			Title:       "配列の操作",
+			Description: "サイズ5の整数配列を作成し、ループを使って 0, 10, 20, 30, 40 を代入して表示してください。",
+			StarterCode: `package main
+
+import "fmt"
+
+func main() {
+    // サイズ5の配列を宣言
+    var arr [5]int
+    
+    // ループで値を代入
+    
+    
+    fmt.Println(arr)
+}`,
+		},
 	})
 
 	s.addQuiz(models.Quiz{
 		LessonID: "4-1",
 		Questions: []models.Question{
 			{
-				ID:      "4-1-1",
-				Text:    "[3]int と [5]int は同じ型か？",
-				Options: []string{"同じ型", "異なる型", "場合による", "互換性がある"},
-				Answer:  1,
+				ID:          "4-1-1",
+				Text:        "[3]int と [5]int は同じ型か？",
+				Options:     []string{"同じ型", "異なる型", "場合による", "互換性がある"},
+				Answer:      1,
 				Explanation: "配列のサイズは型の一部なので、[3]int と [5]int は異なる型です。",
 			},
 			{
-				ID:      "4-1-2",
-				Text:    "配列を別の変数に代入するとどうなる？",
-				Options: []string{"参照が共有される", "全要素がコピーされる", "ポインタがコピーされる", "エラーになる"},
-				Answer:  1,
+				ID:          "4-1-2",
+				Text:        "配列を別の変数に代入するとどうなる？",
+				Options:     []string{"参照が共有される", "全要素がコピーされる", "ポインタがコピーされる", "エラーになる"},
+				Answer:      1,
 				Explanation: "Goの配列は値型なので、代入すると全要素がコピーされます。",
 			},
 		},
@@ -149,30 +166,50 @@ func main() {
 			"append は容量超過時に新しい基底配列を確保します",
 			"nil スライスと空スライスは異なりますが、len()はどちらも0です",
 		},
+		Exercise: &models.Exercise{
+			Title:       "スライスの拡張",
+			Description: "空の整数スライスを作成し、appendを使って 1 から 5 までの数字を順番に追加し、その都度長さ(len)と容量(cap)を表示してください。",
+			StarterCode: `package main
+
+import "fmt"
+
+func main() {
+    // 空のスライスを作成
+    var s []int
+    
+    // 1から5までループして append
+    for i := 1; i <= 5; i++ {
+        // 追加
+        
+        // lenとcapを表示
+        
+    }
+}`,
+		},
 	})
 
 	s.addQuiz(models.Quiz{
 		LessonID: "4-2",
 		Questions: []models.Question{
 			{
-				ID:      "4-2-1",
-				Text:    "スライスを構成する3つの要素は？",
-				Options: []string{"型、値、サイズ", "ポインタ、長さ、容量", "インデックス、値、長さ", "配列、開始、終了"},
-				Answer:  1,
+				ID:          "4-2-1",
+				Text:        "スライスを構成する3つの要素は？",
+				Options:     []string{"型、値、サイズ", "ポインタ、長さ、容量", "インデックス、値、長さ", "配列、開始、終了"},
+				Answer:      1,
 				Explanation: "スライスはポインタ（基底配列への参照）、長さ（len）、容量（cap）で構成されます。",
 			},
 			{
-				ID:      "4-2-2",
-				Text:    "s[1:4] はどの要素を含む？",
-				Options: []string{"インデックス1,2,3,4", "インデックス1,2,3", "インデックス0,1,2,3", "インデックス1,2"},
-				Answer:  1,
+				ID:          "4-2-2",
+				Text:        "s[1:4] はどの要素を含む？",
+				Options:     []string{"インデックス1,2,3,4", "インデックス1,2,3", "インデックス0,1,2,3", "インデックス1,2"},
+				Answer:      1,
 				Explanation: "スライス式 s[1:4] はインデックス1から3まで（4は含まない）の要素を含みます。",
 			},
 			{
-				ID:      "4-2-3",
-				Text:    "スライスの独立したコピーを作るには？",
-				Options: []string{"= で代入", "copy() を使う", "clone() を使う", "new() を使う"},
-				Answer:  1,
+				ID:          "4-2-3",
+				Text:        "スライスの独立したコピーを作るには？",
+				Options:     []string{"= で代入", "copy() を使う", "clone() を使う", "new() を使う"},
+				Answer:      1,
 				Explanation: "copy() 関数を使うと、スライスの要素を別のスライスにコピーできます。",
 			},
 		},
@@ -235,30 +272,48 @@ func main() {
 			"nil マップへの書き込みは panic を起こします（必ず make で初期化）",
 			"マップは並行処理で安全ではありません（sync.Map を検討してください）",
 		},
+		Exercise: &models.Exercise{
+			Title:       "果物の価格表",
+			Description: "果物の名前（string）と価格（int）を格納するマップを作成し、\"apple\": 100, \"banana\": 150 を初期値として登録してください。その後、\"orange\": 200 を追加し、\"apple\" を削除してマップ全体を表示してください。",
+			StarterCode: `package main
+
+import "fmt"
+
+func main() {
+    // マップの作成と初期化
+    
+    // orangeを追加
+    
+    // appleを削除
+    
+    // 結果を表示
+    fmt.Println(fruits)
+}`,
+		},
 	})
 
 	s.addQuiz(models.Quiz{
 		LessonID: "4-3",
 		Questions: []models.Question{
 			{
-				ID:      "4-3-1",
-				Text:    "マップに存在しないキーを読むとどうなる？",
-				Options: []string{"panic が起きる", "nil が返る", "ゼロ値が返る", "エラーが返る"},
-				Answer:  2,
+				ID:          "4-3-1",
+				Text:        "マップに存在しないキーを読むとどうなる？",
+				Options:     []string{"panic が起きる", "nil が返る", "ゼロ値が返る", "エラーが返る"},
+				Answer:      2,
 				Explanation: "存在しないキーを読むとその型のゼロ値が返ります。存在確認には comma ok イディオムを使います。",
 			},
 			{
-				ID:      "4-3-2",
-				Text:    "マップの反復順序は？",
-				Options: []string{"挿入順", "キーの昇順", "保証されない", "キーの降順"},
-				Answer:  2,
+				ID:          "4-3-2",
+				Text:        "マップの反復順序は？",
+				Options:     []string{"挿入順", "キーの昇順", "保証されない", "キーの降順"},
+				Answer:      2,
 				Explanation: "マップの反復順序は保証されていません。順序が必要な場合はキーをソートする必要があります。",
 			},
 			{
-				ID:      "4-3-3",
-				Text:    "age, ok := m[\"key\"] の ok は何を表す？",
-				Options: []string{"値が正しいか", "キーが存在するか", "型が一致するか", "マップが初期化されているか"},
-				Answer:  1,
+				ID:          "4-3-3",
+				Text:        "age, ok := m[\"key\"] の ok は何を表す？",
+				Options:     []string{"値が正しいか", "キーが存在するか", "型が一致するか", "マップが初期化されているか"},
+				Answer:      1,
 				Explanation: "comma ok イディオムの2番目の戻り値は、キーが存在するかどうかを bool で返します。",
 			},
 		},

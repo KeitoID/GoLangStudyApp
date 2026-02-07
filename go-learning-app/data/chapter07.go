@@ -67,23 +67,50 @@ func main() {
 			"fmt.Errorf の %w 動詞でエラーをラップ（包む）できます",
 			"errors.Is() と errors.As() でラップされたエラーを判定できます",
 		},
+		Exercise: &models.Exercise{
+			Title:       "割り算のエラー",
+			Description: "2つの整数を受け取り、割り算の結果を返す関数 divide を作成してください。ただし、0で割ろうとした場合はエラーを返してください。",
+			StarterCode: `package main
+
+import (
+    "errors"
+    "fmt"
+)
+
+func divide(a, b int) (int, error) {
+    if b == 0 {
+        // エラーを返す
+        
+    }
+    return a / b, nil
+}
+
+func main() {
+    res, err := divide(10, 0)
+    if err != nil {
+        fmt.Println("エラー:", err)
+    } else {
+        fmt.Println("結果:", res)
+    }
+}`,
+		},
 	})
 
 	s.addQuiz(models.Quiz{
 		LessonID: "7-1",
 		Questions: []models.Question{
 			{
-				ID:      "7-1-1",
-				Text:    "error インターフェースが持つメソッドは？",
-				Options: []string{"String() string", "Error() string", "Message() string", "Err() string"},
-				Answer:  1,
+				ID:          "7-1-1",
+				Text:        "error インターフェースが持つメソッドは？",
+				Options:     []string{"String() string", "Error() string", "Message() string", "Err() string"},
+				Answer:      1,
 				Explanation: "error インターフェースは Error() string メソッドのみを持つシンプルなインターフェースです。",
 			},
 			{
-				ID:      "7-1-2",
-				Text:    "fmt.Errorf の %w 動詞の用途は？",
-				Options: []string{"警告を出す", "エラーをラップする", "エラーを無視する", "ログに記録する"},
-				Answer:  1,
+				ID:          "7-1-2",
+				Text:        "fmt.Errorf の %w 動詞の用途は？",
+				Options:     []string{"警告を出す", "エラーをラップする", "エラーを無視する", "ログに記録する"},
+				Answer:      1,
 				Explanation: "%w 動詞を使うとエラーをラップ（包む）でき、errors.Is() や errors.As() でチェーンを辿れます。",
 			},
 		},
@@ -146,23 +173,48 @@ func main() {
 			"errors.Is() は値の同一性、errors.As() は型の一致を確認します",
 			"エラー型はポインタレシーバで Error() を実装するのが一般的です",
 		},
+		Exercise: &models.Exercise{
+			Title:       "不足エラー",
+			Description: "残高(Balance)不足を表すカスタムエラー InsufficientFundsError を定義し、支払い処理(Pay)で残高不足の場合にこのエラーを返してください。",
+			StarterCode: `package main
+
+import "fmt"
+
+// カスタムエラー定義
+
+// 支払い関数
+func Pay(balance, amount int) error {
+    if balance < amount {
+        // エラーを返す
+        
+    }
+    return nil
+}
+
+func main() {
+    err := Pay(100, 200)
+    if err != nil {
+        fmt.Println(err)
+    }
+}`,
+		},
 	})
 
 	s.addQuiz(models.Quiz{
 		LessonID: "7-2",
 		Questions: []models.Question{
 			{
-				ID:      "7-2-1",
-				Text:    "カスタムエラー型に必要なメソッドは？",
-				Options: []string{"String()", "Error() string", "Unwrap()", "Is()"},
-				Answer:  1,
+				ID:          "7-2-1",
+				Text:        "カスタムエラー型に必要なメソッドは？",
+				Options:     []string{"String()", "Error() string", "Unwrap()", "Is()"},
+				Answer:      1,
 				Explanation: "error インターフェースを実装するには Error() string メソッドが必要です。",
 			},
 			{
-				ID:      "7-2-2",
-				Text:    "errors.As() の用途は？",
-				Options: []string{"エラーを作成する", "エラーを特定の型に変換する", "エラーをログに出す", "エラーを無視する"},
-				Answer:  1,
+				ID:          "7-2-2",
+				Text:        "errors.As() の用途は？",
+				Options:     []string{"エラーを作成する", "エラーを特定の型に変換する", "エラーをログに出す", "エラーを無視する"},
+				Answer:      1,
 				Explanation: "errors.As() はエラーチェーンを辿って、特定の型のエラーを取り出します。",
 			},
 		},
@@ -228,30 +280,53 @@ func main() {
 			"deferはLIFO（後入れ先出し）順で実行されます",
 			"ライブラリではpanicの代わりにerrorを返すのがGoの慣例です",
 		},
+		Exercise: &models.Exercise{
+			Title:       "パニックからの回復",
+			Description: "意図的にpanicを起こす関数を作成し、それを呼び出してもメインプログラムが終了しないようにrecoverを使って回復してください。",
+			StarterCode: `package main
+
+import "fmt"
+
+func dangerous() {
+    panic("大変だ！")
+}
+
+func safeCall() {
+    // deferとrecoverで回復
+    
+    
+    dangerous()
+}
+
+func main() {
+    safeCall()
+    fmt.Println("メインは正常に終了")
+}`,
+		},
 	})
 
 	s.addQuiz(models.Quiz{
 		LessonID: "7-3",
 		Questions: []models.Question{
 			{
-				ID:      "7-3-1",
-				Text:    "recoverが機能するのはどこ？",
-				Options: []string{"どこでも", "main関数内", "defer関数内のみ", "goroutine内のみ"},
-				Answer:  2,
+				ID:          "7-3-1",
+				Text:        "recoverが機能するのはどこ？",
+				Options:     []string{"どこでも", "main関数内", "defer関数内のみ", "goroutine内のみ"},
+				Answer:      2,
 				Explanation: "recover() はdefer関数内でのみ機能します。それ以外の場所では常にnilを返します。",
 			},
 			{
-				ID:      "7-3-2",
-				Text:    "panicを使うべき場面は？",
-				Options: []string{"全てのエラー", "ファイルが見つからない時", "回復不能なプログラミングミス", "ネットワークエラー"},
-				Answer:  2,
+				ID:          "7-3-2",
+				Text:        "panicを使うべき場面は？",
+				Options:     []string{"全てのエラー", "ファイルが見つからない時", "回復不能なプログラミングミス", "ネットワークエラー"},
+				Answer:      2,
 				Explanation: "panicは回復不能なエラー（初期化失敗やプログラミングミス）にのみ使うべきです。通常のエラーにはerrorを使います。",
 			},
 			{
-				ID:      "7-3-3",
-				Text:    "deferの実行順序は？",
-				Options: []string{"FIFO（先入れ先出し）", "LIFO（後入れ先出し）", "ランダム", "宣言順"},
-				Answer:  1,
+				ID:          "7-3-3",
+				Text:        "deferの実行順序は？",
+				Options:     []string{"FIFO（先入れ先出し）", "LIFO（後入れ先出し）", "ランダム", "宣言順"},
+				Answer:      1,
 				Explanation: "deferはLIFO（後入れ先出し/スタック）順で実行されます。最後にdeferされたものが最初に実行されます。",
 			},
 		},
