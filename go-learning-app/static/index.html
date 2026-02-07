@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Go言語学習アプリ</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <header class="header">
+            <button class="menu-toggle" id="menuToggle" aria-label="メニュー">
+                <span></span><span></span><span></span>
+            </button>
+            <h1 class="header-title">Go言語学習</h1>
+            <div class="header-actions">
+                <div class="progress-mini" id="progressMini">
+                    <span class="progress-text" id="progressText">0/0</span>
+                    <div class="progress-bar-mini">
+                        <div class="progress-fill-mini" id="progressFill"></div>
+                    </div>
+                </div>
+                <button class="theme-toggle" id="themeToggle" aria-label="テーマ切替">
+                    <span class="theme-icon" id="themeIcon">🌙</span>
+                </button>
+            </div>
+        </header>
+
+        <div class="layout">
+            <!-- Sidebar -->
+            <aside class="sidebar" id="sidebar">
+                <nav class="sidebar-nav" id="sidebarNav">
+                    <div class="sidebar-loading">読み込み中...</div>
+                </nav>
+            </aside>
+
+            <!-- Overlay for mobile -->
+            <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+            <!-- Main content -->
+            <main class="main-content" id="mainContent">
+                <div class="welcome" id="welcomeScreen">
+                    <div class="welcome-inner">
+                        <h2>Go言語を学ぼう</h2>
+                        <p>このアプリでは、Go言語の基礎から実践的なパターンまでを体系的に学べます。</p>
+                        <div class="welcome-features">
+                            <div class="feature">
+                                <span class="feature-num">10</span>
+                                <span class="feature-label">チャプター</span>
+                            </div>
+                            <div class="feature">
+                                <span class="feature-num">34</span>
+                                <span class="feature-label">レッスン</span>
+                            </div>
+                            <div class="feature">
+                                <span class="feature-num">100+</span>
+                                <span class="feature-label">クイズ</span>
+                            </div>
+                        </div>
+                        <p class="welcome-hint">左のサイドバーからレッスンを選んで始めましょう。</p>
+                    </div>
+                </div>
+                <div class="lesson-view" id="lessonView" style="display:none;"></div>
+                <div class="quiz-view" id="quizView" style="display:none;"></div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-go.min.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/progress.js"></script>
+    <script src="/js/theme.js"></script>
+    <script src="/js/quiz.js"></script>
+    <script src="/js/components.js"></script>
+    <script src="/js/app.js"></script>
+</body>
+</html>
