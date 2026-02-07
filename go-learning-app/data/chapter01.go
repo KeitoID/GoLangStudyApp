@@ -57,30 +57,42 @@ func main() {
 			"未使用のimportはコンパイルエラーになります",
 			"main パッケージの main() 関数がプログラムのエントリポイントです",
 		},
+		Exercise: &models.Exercise{
+			Title:       "自己紹介プログラムを作ろう",
+			Description: "「こんにちは、私は○○です！」と表示するプログラムを書いてください。○○には自分の名前を入れましょう。",
+			StarterCode: `package main
+
+import "fmt"
+
+func main() {
+    // ここに自分の名前を表示するコードを書いてください
+    
+}`,
+		},
 	})
 
 	s.addQuiz(models.Quiz{
 		LessonID: "1-1",
 		Questions: []models.Question{
 			{
-				ID:      "1-1-1",
-				Text:    "Goの実行可能プログラムで必要なパッケージ名は？",
-				Options: []string{"main", "app", "go", "run"},
-				Answer:  0,
+				ID:          "1-1-1",
+				Text:        "Goの実行可能プログラムで必要なパッケージ名は？",
+				Options:     []string{"main", "app", "go", "run"},
+				Answer:      0,
 				Explanation: "実行可能なGoプログラムは必ず package main を宣言する必要があります。",
 			},
 			{
-				ID:      "1-1-2",
-				Text:    "Goで未使用のimportがあるとどうなる？",
-				Options: []string{"警告が出る", "無視される", "コンパイルエラーになる", "実行時エラーになる"},
-				Answer:  2,
+				ID:          "1-1-2",
+				Text:        "Goで未使用のimportがあるとどうなる？",
+				Options:     []string{"警告が出る", "無視される", "コンパイルエラーになる", "実行時エラーになる"},
+				Answer:      2,
 				Explanation: "Goでは未使用のimportはコンパイルエラーになります。これはコードの清潔さを保つための設計方針です。",
 			},
 			{
-				ID:      "1-1-3",
-				Text:    "fmt.Println() の役割は？",
-				Options: []string{"ファイルに書き込む", "標準出力に改行付きで表示する", "エラーを出力する", "ログに記録する"},
-				Answer:  1,
+				ID:          "1-1-3",
+				Text:        "fmt.Println() の役割は？",
+				Options:     []string{"ファイルに書き込む", "標準出力に改行付きで表示する", "エラーを出力する", "ログに記録する"},
+				Answer:      1,
 				Explanation: "fmt.Println() は引数を標準出力に表示し、最後に改行を追加します。",
 			},
 		},
@@ -153,30 +165,45 @@ func main() {
 			"Goでは未使用の変数もコンパイルエラーになります",
 			"定数には := は使えません（const を使います）",
 		},
+		Exercise: &models.Exercise{
+			Title:       "変数を使って計算しよう",
+			Description: "2つの変数 a と b を宣言し、それぞれ 10 と 20 を代入してください。その後、a + b の結果を表示してください。",
+			StarterCode: `package main
+
+import "fmt"
+
+func main() {
+    // 変数 a と b を宣言して値を代入
+    
+    
+    // a + b の結果を表示
+    
+}`,
+		},
 	})
 
 	s.addQuiz(models.Quiz{
 		LessonID: "1-2",
 		Questions: []models.Question{
 			{
-				ID:      "1-2-1",
-				Text:    ":= （短縮変数宣言）はどこで使える？",
-				Options: []string{"どこでも使える", "関数内のみ", "パッケージレベルのみ", "main関数内のみ"},
-				Answer:  1,
+				ID:          "1-2-1",
+				Text:        ":= （短縮変数宣言）はどこで使える？",
+				Options:     []string{"どこでも使える", "関数内のみ", "パッケージレベルのみ", "main関数内のみ"},
+				Answer:      1,
 				Explanation: ":= は関数の内部でのみ使用可能です。パッケージレベルでは var を使う必要があります。",
 			},
 			{
-				ID:      "1-2-2",
-				Text:    "int型のゼロ値は？",
-				Options: []string{"nil", "0", "false", "\"\""},
-				Answer:  1,
+				ID:          "1-2-2",
+				Text:        "int型のゼロ値は？",
+				Options:     []string{"nil", "0", "false", "\"\""},
+				Answer:      1,
 				Explanation: "int型のゼロ値は 0 です。各型にはそれぞれのゼロ値があります。",
 			},
 			{
-				ID:      "1-2-3",
-				Text:    "Goで未使用の変数があるとどうなる？",
-				Options: []string{"警告が出る", "自動的に削除される", "コンパイルエラーになる", "何も起きない"},
-				Answer:  2,
+				ID:          "1-2-3",
+				Text:        "Goで未使用の変数があるとどうなる？",
+				Options:     []string{"警告が出る", "自動的に削除される", "コンパイルエラーになる", "何も起きない"},
+				Answer:      2,
 				Explanation: "Goでは未使用の変数はコンパイルエラーになります。コードの清潔さを保つための設計です。",
 			},
 		},
@@ -258,23 +285,43 @@ func main() {
 			"string は UTF-8 エンコードされたバイト列です",
 			"暗黙の型変換はないため、異なる型同士の演算にはキャストが必要です",
 		},
+		Exercise: &models.Exercise{
+			Title:       "型変換を練習しよう",
+			Description: "整数 100 を float64 に変換して表示してください。また、その float64 の値を uint に変換して表示してください。",
+			StarterCode: `package main
+
+import "fmt"
+
+func main() {
+    num := 100
+    
+    // num を float64 に変換
+    
+    
+    // さらに uint に変換
+    
+    
+    // 結果を表示
+    
+}`,
+		},
 	})
 
 	s.addQuiz(models.Quiz{
 		LessonID: "1-3",
 		Questions: []models.Question{
 			{
-				ID:      "1-3-1",
-				Text:    "runeは何のエイリアス？",
-				Options: []string{"uint8", "int32", "int64", "byte"},
-				Answer:  1,
+				ID:          "1-3-1",
+				Text:        "runeは何のエイリアス？",
+				Options:     []string{"uint8", "int32", "int64", "byte"},
+				Answer:      1,
 				Explanation: "rune は int32 のエイリアスで、Unicodeコードポイントを表します。",
 			},
 			{
-				ID:      "1-3-2",
-				Text:    "Goで int を float64 に変換するには？",
-				Options: []string{"自動変換される", "float64(i)", "(float64)i", "i.toFloat64()"},
-				Answer:  1,
+				ID:          "1-3-2",
+				Text:        "Goで int を float64 に変換するには？",
+				Options:     []string{"自動変換される", "float64(i)", "(float64)i", "i.toFloat64()"},
+				Answer:      1,
 				Explanation: "Goでは明示的な型変換が必要です。float64(i) の形で変換します。",
 			},
 		},
@@ -359,30 +406,47 @@ func main() {
 			"%%  でリテラルの % を出力できます",
 			"fmt.Errorf() でエラー値を書式付きで生成できます",
 		},
+		Exercise: &models.Exercise{
+			Title:       "自分のプロフィールを書式付きで表示",
+			Description: "名前（文字列）、年齢（整数）、身長（float64）を変数に格納し、fmt.Printfを使って「名前: ○○, 年齢: ○○歳, 身長: ○○cm」の形式で表示してください。",
+			StarterCode: `package main
+
+import "fmt"
+
+func main() {
+    // 変数を宣言
+    name := ""
+    age := 0
+    height := 0.0
+    
+    // fmt.Printf で書式付き表示
+    
+}`,
+		},
 	})
 
 	s.addQuiz(models.Quiz{
 		LessonID: "1-4",
 		Questions: []models.Question{
 			{
-				ID:      "1-4-1",
-				Text:    "fmt.Sprintf() は何を返す？",
-				Options: []string{"int", "error", "string", "[]byte"},
-				Answer:  2,
+				ID:          "1-4-1",
+				Text:        "fmt.Sprintf() は何を返す？",
+				Options:     []string{"int", "error", "string", "[]byte"},
+				Answer:      2,
 				Explanation: "fmt.Sprintf() は書式付きの文字列を返します。標準出力には出力しません。",
 			},
 			{
-				ID:      "1-4-2",
-				Text:    "%v フォーマット指定子の意味は？",
-				Options: []string{"verbose出力", "デフォルト形式で値を表示", "バージョン表示", "検証モード"},
-				Answer:  1,
+				ID:          "1-4-2",
+				Text:        "%v フォーマット指定子の意味は？",
+				Options:     []string{"verbose出力", "デフォルト形式で値を表示", "バージョン表示", "検証モード"},
+				Answer:      1,
 				Explanation: "%v はデフォルト形式で値を表示します。構造体の場合はフィールド値が表示されます。",
 			},
 			{
-				ID:      "1-4-3",
-				Text:    "変数の型名を表示する書式指定子は？",
-				Options: []string{"%v", "%s", "%T", "%t"},
-				Answer:  2,
+				ID:          "1-4-3",
+				Text:        "変数の型名を表示する書式指定子は？",
+				Options:     []string{"%v", "%s", "%T", "%t"},
+				Answer:      2,
 				Explanation: "%T は値の型名を表示します。デバッグ時に型を確認するのに便利です。",
 			},
 		},

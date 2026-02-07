@@ -16,8 +16,8 @@
     --success: #22c55e;
     --error: #ef4444;
     --warning: #f59e0b;
-    --shadow: 0 1px 3px rgba(0,0,0,0.1);
-    --shadow-lg: 0 4px 12px rgba(0,0,0,0.15);
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.15);
     --radius: 8px;
     --sidebar-width: 280px;
     --header-height: 56px;
@@ -37,12 +37,14 @@
     --accent-hover: #7dd3fc;
     --accent-light: #0c4a6e;
     --border: #334155;
-    --shadow: 0 1px 3px rgba(0,0,0,0.3);
-    --shadow-lg: 0 4px 12px rgba(0,0,0,0.4);
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 /* === Reset & Base === */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -126,7 +128,7 @@ body {
 .progress-bar-mini {
     width: 80px;
     height: 6px;
-    background: rgba(255,255,255,0.2);
+    background: rgba(255, 255, 255, 0.2);
     border-radius: 3px;
     overflow: hidden;
 }
@@ -206,7 +208,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 4px;
     font-size: 0.75rem;
     margin-right: 10px;
@@ -253,12 +255,12 @@ body {
 }
 
 .lesson-item:hover {
-    background: rgba(255,255,255,0.05);
+    background: rgba(255, 255, 255, 0.05);
     color: var(--text-sidebar-active);
 }
 
 .lesson-item.active {
-    background: rgba(0,173,216,0.15);
+    background: rgba(0, 173, 216, 0.15);
     color: var(--accent);
     font-weight: 500;
 }
@@ -266,7 +268,7 @@ body {
 .lesson-check {
     width: 16px;
     height: 16px;
-    border: 2px solid rgba(255,255,255,0.3);
+    border: 2px solid rgba(255, 255, 255, 0.3);
     border-radius: 50%;
     flex-shrink: 0;
     display: flex;
@@ -289,7 +291,7 @@ body {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0, 0, 0, 0.5);
     z-index: 80;
 }
 
@@ -361,8 +363,15 @@ body {
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .lesson-breadcrumb {
@@ -553,12 +562,12 @@ body {
 
 .quiz-option.correct {
     border-color: var(--success);
-    background: rgba(34,197,94,0.1);
+    background: rgba(34, 197, 94, 0.1);
 }
 
 .quiz-option.wrong {
     border-color: var(--error);
-    background: rgba(239,68,68,0.1);
+    background: rgba(239, 68, 68, 0.1);
 }
 
 .quiz-option.disabled {
@@ -573,12 +582,12 @@ body {
 
 .quiz-option.correct.disabled:hover {
     border-color: var(--success);
-    background: rgba(34,197,94,0.1);
+    background: rgba(34, 197, 94, 0.1);
 }
 
 .quiz-option.wrong.disabled:hover {
     border-color: var(--error);
-    background: rgba(239,68,68,0.1);
+    background: rgba(239, 68, 68, 0.1);
 }
 
 .quiz-option-marker {
@@ -785,7 +794,7 @@ body {
 }
 
 .sidebar::-webkit-scrollbar-thumb {
-    background: rgba(255,255,255,0.2);
+    background: rgba(255, 255, 255, 0.2);
     border-radius: 2px;
 }
 
@@ -874,11 +883,46 @@ pre[class*="language-"] {
 .CodeMirror {
     font-family: 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace;
     font-size: 14px;
-    line-height: 1.5;
+    line-height: 1.6;
+    height: auto;
+    min-height: 200px;
+    border: none;
+}
+
+.CodeMirror-scroll {
+    min-height: 200px;
+}
+
+/* Fix line number gutter */
+.CodeMirror-gutters {
+    background: var(--bg-secondary);
+    border-right: 1px solid var(--border);
+    padding-right: 8px;
+}
+
+.CodeMirror-linenumber {
+    color: var(--text-secondary);
+    padding: 0 8px 0 12px;
+    min-width: 32px;
+    text-align: right;
+}
+
+/* Code content area */
+.CodeMirror-lines {
+    padding: 8px 0;
+}
+
+.CodeMirror pre.CodeMirror-line {
+    padding-left: 12px;
 }
 
 [data-theme="dark"] .CodeMirror {
     background: var(--bg-code);
+}
+
+[data-theme="dark"] .CodeMirror-gutters {
+    background: rgba(0, 0, 0, 0.3);
+    border-right-color: rgba(255, 255, 255, 0.1);
 }
 
 /* Output panel */
@@ -979,14 +1023,13 @@ pre[class*="language-"] {
         gap: 8px;
         align-items: flex-start;
     }
-    
+
     .editor-actions {
         width: 100%;
     }
-    
+
     .editor-btn {
         flex: 1;
         justify-content: center;
     }
 }
-
