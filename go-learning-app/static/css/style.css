@@ -798,3 +798,195 @@ pre[class*="language-"] {
 [data-theme="dark"] .code-example-title {
     background: var(--bg-primary);
 }
+
+/* === Code Editor === */
+.editor-container {
+    margin: 24px 0;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--bg-card);
+}
+
+.editor-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+}
+
+.editor-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.editor-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.editor-btn {
+    padding: 6px 14px;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.editor-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.run-btn {
+    background: var(--success);
+    color: #fff;
+}
+
+.run-btn:hover:not(:disabled) {
+    background: #16a34a;
+    transform: translateY(-1px);
+}
+
+.reset-btn {
+    background: var(--bg-primary);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+}
+
+.reset-btn:hover {
+    background: var(--border);
+}
+
+.editor-wrapper {
+    border-bottom: 1px solid var(--border);
+}
+
+/* CodeMirror customization */
+.CodeMirror {
+    font-family: 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+[data-theme="dark"] .CodeMirror {
+    background: var(--bg-code);
+}
+
+/* Output panel */
+.output-container {
+    background: var(--bg-primary);
+}
+
+.output-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+}
+
+.output-status {
+    font-weight: 600;
+}
+
+.output-content {
+    margin: 0;
+    padding: 16px;
+    font-family: 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 0.88rem;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    max-height: 300px;
+    overflow-y: auto;
+    color: var(--text-primary);
+    background: var(--bg-primary);
+}
+
+.output-content.error {
+    color: var(--error);
+    background: rgba(239, 68, 68, 0.05);
+}
+
+/* Exercise section */
+.exercise-section {
+    margin: 32px 0;
+    padding: 24px;
+    background: var(--bg-card);
+    border: 2px solid var(--accent);
+    border-radius: var(--radius);
+}
+
+.exercise-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.exercise-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.exercise-description {
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+}
+
+/* Make code examples interactive */
+.code-example-actions {
+    padding: 8px 16px;
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: flex-end;
+}
+
+.try-btn {
+    padding: 6px 14px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.try-btn:hover {
+    background: var(--accent-hover);
+}
+
+/* Responsive editor */
+@media (max-width: 768px) {
+    .editor-header {
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start;
+    }
+    
+    .editor-actions {
+        width: 100%;
+    }
+    
+    .editor-btn {
+        flex: 1;
+        justify-content: center;
+    }
+}
+

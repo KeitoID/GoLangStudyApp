@@ -25,6 +25,7 @@ func main() {
 	mux.HandleFunc("GET /api/chapters", h.GetChapters)
 	mux.HandleFunc("GET /api/lessons/{id}", h.GetLesson)
 	mux.HandleFunc("GET /api/quiz/{lessonId}", h.GetQuiz)
+	mux.HandleFunc("POST /api/run", h.RunCode)
 
 	// Static files
 	staticFS, err := fs.Sub(staticFiles, "static")

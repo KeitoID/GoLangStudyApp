@@ -96,12 +96,18 @@ const Components = {
             <h1 class="lesson-title">${lesson.title}</h1>
             <div class="lesson-content">${contentHtml}</div>`;
 
-        // Code examples
-        for (const ex of lesson.codeExamples) {
+        // Code examples with "Try it" button
+        for (let i = 0; i < lesson.codeExamples.length; i++) {
+            const ex = lesson.codeExamples[i];
             html += `
             <div class="code-example">
                 <div class="code-example-title">${ex.title}</div>
                 <pre class="language-go"><code class="language-go">${this._escapeHtml(ex.code)}</code></pre>
+                <div class="code-example-actions">
+                    <button class="try-btn" onclick="Components.loadCodeToEditor('${lesson.id}', ${i})">
+                        ▶ 試してみる
+                    </button>
+                </div>
             </div>`;
         }
 
@@ -116,6 +122,24 @@ const Components = {
             </div>`;
         }
 
+        // Exercise section with editor
+        const starterCode = lesson.exercise?.starterCode || lesson.codeExamples[0]?.code || `package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("Hello, Go!")
+}`;
+
+        html += `
+        <div class="exercise-section">
+            <div class="exercise-header">
+                <span class="exercise-title">💻 ${lesson.exercise?.title || 'コードを書いてみよう'}</span>
+            </div>
+            <p class="exercise-description">${lesson.exercise?.description || '上記のコードを参考に、自分でコードを書いて実行してみましょう。'}</p>
+            <div id="editorMount"></div>
+        </div>`;
+
         // Quiz button
         html += `
             <button class="quiz-start-btn" onclick="App.startQuiz('${lesson.id}')">
@@ -127,9 +151,31 @@ const Components = {
 
         view.innerHTML = html;
 
+        // Initialize editor
+        const editorMount = document.getElementById('editorMount');
+        if (editorMount && typeof Editor !== 'undefined') {
+            Editor.init(editorMount, starterCode);
+        }
+
+        // Store lesson for later use
+        this._currentLesson = lesson;
+
         // Highlight code
         if (window.Prism) {
             Prism.highlightAllUnder(view);
+        }
+    },
+
+    // Load code example into editor
+    loadCodeToEditor(lessonId, exampleIndex) {
+        if (this._currentLesson && this._currentLesson.id === lessonId) {
+            const code = this._currentLesson.codeExamples[exampleIndex]?.code;
+            if (code && Editor.editor) {
+                Editor.currentStarterCode = code;
+                Editor.editor.setValue(code);
+                // Scroll to editor
+                document.getElementById('editorMount')?.scrollIntoView({ behavior: 'smooth' });
+            }
         }
     },
 
@@ -244,10 +290,10 @@ const Components = {
                 </div>
                 <div class="quiz-actions" style="justify-content:center;">
                     ${result.passed
-                        ? `<button class="btn btn-primary" onclick="App.showLesson()">レッスンに戻る</button>`
-                        : `<button class="btn btn-primary" onclick="App.startQuiz('${lessonId}')">もう一度挑戦</button>
+                ? `<button class="btn btn-primary" onclick="App.showLesson()">レッスンに戻る</button>`
+                : `<button class="btn btn-primary" onclick="App.startQuiz('${lessonId}')">もう一度挑戦</button>
                            <button class="btn btn-secondary" onclick="App.showLesson()">レッスンに戻る</button>`
-                    }
+            }
                 </div>
             </div>`;
 

@@ -16,18 +16,26 @@ type LessonSummary struct {
 
 // Lesson is the full lesson content including code examples and notes.
 type Lesson struct {
-	ID          string        `json:"id"`
-	ChapterID   int           `json:"chapterId"`
-	Title       string        `json:"title"`
-	Content     string        `json:"content"`
+	ID           string        `json:"id"`
+	ChapterID    int           `json:"chapterId"`
+	Title        string        `json:"title"`
+	Content      string        `json:"content"`
 	CodeExamples []CodeExample `json:"codeExamples"`
-	Notes       []string      `json:"notes,omitempty"`
+	Notes        []string      `json:"notes,omitempty"`
+	Exercise     *Exercise     `json:"exercise,omitempty"`
 }
 
 // CodeExample holds a titled code snippet.
 type CodeExample struct {
 	Title string `json:"title"`
 	Code  string `json:"code"`
+}
+
+// Exercise defines a coding exercise with starter code.
+type Exercise struct {
+	Title       string `json:"title"`
+	Description string `json:"description"`
+	StarterCode string `json:"starterCode"`
 }
 
 // Quiz holds the questions for a particular lesson.

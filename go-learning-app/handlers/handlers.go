@@ -1,8 +1,13 @@
 package handlers
 
 import (
+	"context"
 	"encoding/json"
 	"net/http"
+	"os"
+	"os/exec"
+	"path/filepath"
+	"time"
 
 	"go-learning-app/data"
 )
@@ -42,6 +47,66 @@ func (h *Handler) GetQuiz(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	writeJSON(w, http.StatusOK, quiz)
+}
+
+// RunCodeRequest is the request body for running code.
+type RunCodeRequest struct {
+	Code string `json:"code"`
+}
+
+// RunCodeResponse is the response from running code.
+type RunCodeResponse struct {
+	Output string `json:"output"`
+	Error  string `json:"error,omitempty"`
+}
+
+// RunCode executes Go code and returns the output.
+func (h *Handler) RunCode(w http.ResponseWriter, r *http.Request) {
+	var req RunCodeRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		writeJSON(w, http.StatusBadRequest, RunCodeResponse{Error: "Invalid request"})
+		return
+	}
+
+	if req.Code == "" {
+		writeJSON(w, http.StatusBadRequest, RunCodeResponse{Error: "コードが空です"})
+		return
+	}
+
+	// Create temp directory for code execution
+	tmpDir, err := os.MkdirTemp("", "gorun-*")
+	if err != nil {
+		writeJSON(w, http.StatusInternalServerError, RunCodeResponse{Error: "Failed to create temp directory"})
+		return
+	}
+	defer os.RemoveAll(tmpDir)
+
+	// Write code to temp file
+	codePath := filepath.Join(tmpDir, "main.go")
+	if err := os.WriteFile(codePath, []byte(req.Code), 0644); err != nil {
+		writeJSON(w, http.StatusInternalServerError, RunCodeResponse{Error: "Failed to write code"})
+		return
+	}
+
+	// Execute with timeout (5 seconds)
+	ctx, cancel := context.WithTimeout(r.Context(), 5*time.Second)
+	defer cancel()
+
+	cmd := exec.CommandContext(ctx, "go", "run", codePath)
+	output, err := cmd.CombinedOutput()
+
+	resp := RunCodeResponse{}
+	if ctx.Err() == context.DeadlineExceeded {
+		resp.Error = "実行がタイムアウトしました（5秒）"
+		resp.Output = string(output)
+	} else if err != nil {
+		resp.Error = "実行エラー"
+		resp.Output = string(output)
+	} else {
+		resp.Output = string(output)
+	}
+
+	writeJSON(w, http.StatusOK, resp)
 }
 
 func writeJSON(w http.ResponseWriter, status int, data any) {
