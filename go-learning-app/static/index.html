@@ -14,6 +14,19 @@
 </head>
 
 <body>
+    <!-- Login Modal -->
+    <div class="login-modal" id="loginModal" style="display:none;">
+        <div class="login-card">
+            <h2 class="login-title">Go言語学習</h2>
+            <p class="login-desc">ユーザー名を入力して学習を始めましょう</p>
+            <input type="text" id="usernameInput" class="login-input" placeholder="ユーザー名"
+                maxlength="30" autocomplete="off"
+                onkeydown="if(event.key==='Enter') App.handleLogin()">
+            <div class="login-error" id="loginError"></div>
+            <button class="login-btn" onclick="App.handleLogin()">始める</button>
+        </div>
+    </div>
+
     <div id="app">
         <!-- Header -->
         <header class="header">
@@ -28,6 +41,8 @@
                         <div class="progress-fill-mini" id="progressFill"></div>
                     </div>
                 </div>
+                <span class="username-display" id="usernameDisplay" style="display:none;"
+                    onclick="App.handleLogout()" title="クリックでログアウト"></span>
                 <button class="theme-toggle" id="themeToggle" aria-label="テーマ切替">
                     <span class="theme-icon" id="themeIcon">🌙</span>
                 </button>

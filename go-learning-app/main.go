@@ -16,8 +16,15 @@ import (
 var staticFiles embed.FS
 
 func main() {
+	// Initialize SQLite database
+	db, err := data.NewDB(data.DBPath())
+	if err != nil {
+		log.Fatalf("データベースの初期化に失敗しました: %v", err)
+	}
+	defer db.Close()
+
 	store := data.NewStore()
-	h := handlers.New(store)
+	h := handlers.New(store, db)
 
 	mux := http.NewServeMux()
 
@@ -26,6 +33,12 @@ func main() {
 	mux.HandleFunc("GET /api/lessons/{id}", h.GetLesson)
 	mux.HandleFunc("GET /api/quiz/{lessonId}", h.GetQuiz)
 	mux.HandleFunc("POST /api/run", h.RunCode)
+
+	// Progress API routes
+	mux.HandleFunc("POST /api/login", h.Login)
+	mux.HandleFunc("GET /api/progress/{username}", h.GetProgress)
+	mux.HandleFunc("POST /api/progress/{username}/{lessonId}", h.MarkProgress)
+	mux.HandleFunc("DELETE /api/progress/{username}", h.ResetProgress)
 
 	// Static files
 	staticFS, err := fs.Sub(staticFiles, "static")

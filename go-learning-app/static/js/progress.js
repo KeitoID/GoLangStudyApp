@@ -1,46 +1,71 @@
-// Progress management using localStorage
+// Progress management using server-side SQLite via API
 const Progress = {
-    STORAGE_KEY: 'go-learning-progress',
+    USERNAME_KEY: 'go-learning-username',
+    username: null,
+    _completed: new Set(),
 
-    _load() {
-        try {
-            const data = localStorage.getItem(this.STORAGE_KEY);
-            return data ? JSON.parse(data) : {};
-        } catch {
-            return {};
-        }
+    getUsername() {
+        if (this.username) return this.username;
+        this.username = localStorage.getItem(this.USERNAME_KEY);
+        return this.username;
     },
 
-    _save(data) {
-        localStorage.setItem(this.STORAGE_KEY, JSON.stringify(data));
+    setUsername(name) {
+        this.username = name;
+        localStorage.setItem(this.USERNAME_KEY, name);
+    },
+
+    clearUsername() {
+        this.username = null;
+        localStorage.removeItem(this.USERNAME_KEY);
+    },
+
+    isLoggedIn() {
+        return !!this.getUsername();
+    },
+
+    loadFromArray(lessons) {
+        this._completed = new Set(lessons || []);
     },
 
     isCompleted(lessonId) {
-        const data = this._load();
-        return data[lessonId] === true;
+        return this._completed.has(lessonId);
     },
 
-    markCompleted(lessonId) {
-        const data = this._load();
-        data[lessonId] = true;
-        this._save(data);
+    async markCompleted(lessonId) {
+        this._completed.add(lessonId);
+        const username = this.getUsername();
+        if (username) {
+            try {
+                await API.markCompleted(username, lessonId);
+            } catch (e) {
+                console.error('Failed to save progress:', e);
+            }
+        }
     },
 
     getCompletedCount() {
-        const data = this._load();
-        return Object.values(data).filter(v => v === true).length;
+        return this._completed.size;
     },
 
     getCompletedSet() {
-        const data = this._load();
-        const set = new Set();
-        for (const [k, v] of Object.entries(data)) {
-            if (v === true) set.add(k);
-        }
-        return set;
+        return new Set(this._completed);
     },
 
-    reset() {
-        localStorage.removeItem(this.STORAGE_KEY);
-    }
+    async reset() {
+        this._completed.clear();
+        const username = this.getUsername();
+        if (username) {
+            try {
+                await API.resetProgress(username);
+            } catch (e) {
+                console.error('Failed to reset progress:', e);
+            }
+        }
+    },
+
+    async logout() {
+        this._completed.clear();
+        this.clearUsername();
+    },
 };

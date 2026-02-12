@@ -18,3 +18,6 @@ Dockerfile
 
 # OS
 .DS_Store
+
+# Database
+*.db

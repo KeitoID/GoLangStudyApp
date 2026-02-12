@@ -7,6 +7,32 @@ const App = {
         Theme.init();
         this._setupMobileMenu();
 
+        // Check login state
+        if (Progress.isLoggedIn()) {
+            await this._loginAndLoad(Progress.getUsername());
+        } else {
+            this._showLoginModal();
+            return;
+        }
+
+        // Hash-based routing
+        window.addEventListener('hashchange', () => this._handleRoute());
+        this._handleRoute();
+    },
+
+    async _loginAndLoad(username) {
+        try {
+            const result = await API.login(username);
+            Progress.setUsername(result.username);
+            Progress.loadFromArray(result.progress);
+            this._updateUsernameDisplay(result.username);
+        } catch (e) {
+            console.error('Login failed:', e);
+            Progress.clearUsername();
+            this._showLoginModal();
+            return;
+        }
+
         try {
             const chapters = await API.getChapters();
             Components.renderSidebar(chapters);
@@ -14,9 +40,56 @@ const App = {
             console.error('Failed to load chapters:', e);
         }
 
-        // Hash-based routing
-        window.addEventListener('hashchange', () => this._handleRoute());
-        this._handleRoute();
+        this._hideLoginModal();
+    },
+
+    _showLoginModal() {
+        const modal = document.getElementById('loginModal');
+        if (modal) modal.style.display = 'flex';
+    },
+
+    _hideLoginModal() {
+        const modal = document.getElementById('loginModal');
+        if (modal) modal.style.display = 'none';
+    },
+
+    async handleLogin() {
+        const input = document.getElementById('usernameInput');
+        const errorEl = document.getElementById('loginError');
+        const username = input.value.trim();
+
+        if (!username) {
+            errorEl.textContent = '\u30e6\u30fc\u30b6\u30fc\u540d\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044';
+            return;
+        }
+
+        errorEl.textContent = '';
+
+        try {
+            await this._loginAndLoad(username);
+
+            // Set up routing after successful login
+            window.addEventListener('hashchange', () => this._handleRoute());
+            this._handleRoute();
+        } catch (e) {
+            errorEl.textContent = '\u30ed\u30b0\u30a4\u30f3\u306b\u5931\u6557\u3057\u307e\u3057\u305f';
+        }
+    },
+
+    handleLogout() {
+        Progress.logout();
+        this._updateUsernameDisplay(null);
+        // Reload to show login modal
+        window.location.hash = '';
+        window.location.reload();
+    },
+
+    _updateUsernameDisplay(username) {
+        const el = document.getElementById('usernameDisplay');
+        if (el) {
+            el.textContent = username || '';
+            el.style.display = username ? '' : 'none';
+        }
     },
 
     _handleRoute() {
